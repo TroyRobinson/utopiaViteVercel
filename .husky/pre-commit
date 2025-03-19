@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Make sure this hook is executable (self-healing)
+chmod +x "$(dirname -- "$0")/pre-commit"
+chmod +x "$(dirname -- "$0")/post-checkout"
+chmod +x "$(dirname -- "$0")/post-merge"
+chmod +x "$(dirname -- "$0")/../scripts/setupHooks.js"
+
+# Run the storyboard update and add it to the commit
+echo "Running storyboard update..."
+npm run update-storyboard
+
+if [ $? -ne 0 ]; then
+  echo "Error: Storyboard update failed! Aborting commit."
+  exit 1
+fi
+
+# Add the updated storyboard to the commit
+echo "Adding storyboard to commit..."
+git add utopia/storyboard.js
+
+if [ $? -ne 0 ]; then
+  echo "Error: Failed to add storyboard to commit! Aborting."
+  exit 1
+fi
+
+echo "Pre-commit hook completed successfully!"

@@ -1,0 +1,16 @@
+# Ensure hooks remain executable
+.husky/pre-commit binary
+.husky/post-checkout binary
+.husky/post-merge binary
+scripts/setupHooks.js binary
+
+# Maintain line endings for scripts
+*.sh text eol=lf
+.husky/* text eol=lf
+scripts/*.js text eol=lf
+
+# Explicitly mark files as executable - this is a backup  
+.husky/pre-commit linguist-executable
+.husky/post-checkout linguist-executable
+.husky/post-merge linguist-executable
+scripts/setupHooks.js linguist-executable 
